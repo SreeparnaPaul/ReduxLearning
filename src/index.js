@@ -1,5 +1,5 @@
-import { addTask, removeTask,completedTask } from "./store/action";
-import store from "./store/store";
+import { addTask, removeTask,completedTask } from "./store/tasks";
+import store from "./store/configureStore";
 
 const unsubscribe=store.subscribe(()=>{
     console.log("Updated",store.getState());
