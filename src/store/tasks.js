@@ -1,9 +1,12 @@
+import { createAction } from "@reduxjs/toolkit";
+
 // Action Types 
 export const ADD_TASK = "ADD_TASK";
 export const REMOVE_TASK = "REMOVE_TASK";
 export const TASK_COMPLETED = "TASK_COMPLETED";
 
 //Actions
+
 export const addTask = (task)=>{
     return {
         type:ADD_TASK,
