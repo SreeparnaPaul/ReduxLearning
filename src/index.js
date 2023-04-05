@@ -21,3 +21,6 @@ import store from "./store/configureStore";
 // console.log(store.getState());
 
 store.dispatch(addEmployee({name:"Riya"}))
+
+// error middleware
+// store.dispatch({type:"SHOW_ERROR",payload:"User not found"})
