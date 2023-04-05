@@ -1,4 +1,4 @@
-import { addTask, removeTask,completedTask } from "./store/tasks";
+import { addTask, removeTask,completedTask,fetchTodo } from "./store/tasks";
 import store from "./store/configureStore";
 
 const unsubscribe=store.subscribe(()=>{
@@ -11,9 +11,10 @@ console.log(store.getState());
 store.dispatch(addTask("Task 2"))
 console.log(store.getState());
 
-unsubscribe();
+// unsubscribe();
 
 store.dispatch(removeTask(1))
+store.dispatch(fetchTodo())
 console.log(store.getState());
 
 store.dispatch(completedTask(2))
