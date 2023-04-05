@@ -1,6 +1,7 @@
- import { getTasks } from "./store/tasksReduxToolkit";
+import { getTasks } from "./store/tasksReduxToolkit";
 import store from "./store/configureStore";
 import axios from 'axios'
+import { apiCallBegan } from "./store/api";
 import { fetchTasks } from "./store/tasksReduxToolkit";
 
 //1.simple function method
@@ -26,12 +27,12 @@ gettingTasks();
 
 // store.dispatch(fetchTasks());
 
-store.dispatch({
-    type:"apiRequest",
-    payload:{
-        url:"/tasks",
-        onSuccess:"tasks/getTasks",
-        onError:"SHOW_ERROR"
-    }
-})
+
+
+store.dispatch(apiCallBegan({
+    url:"/tasks",
+    onStart:"tasks/apiRequested",
+    onSuccess:"tasks/getTasks",
+    onError:"tasks/apiRequestFailed"
+}))
 

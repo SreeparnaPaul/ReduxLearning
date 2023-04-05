@@ -1,10 +1,11 @@
 import axios from "axios";
+import { apiCallBegan } from "../store/api";
 const api = ({dispatch}) => next => async action =>{
-    if(action.type!=="apiRequest"){
-        return next(action)
-    }
+    if(action.type!==apiCallBegan.type) return next(action)
 
-    const {url,method,data,onSuccess,onError} = action.payload;
+    const {url,method,data,onStart,onSuccess,onError} = action.payload;
+
+    if(onStart) dispatch({type:onStart})
     try {
         const response = await axios.request({
             baseURL:"http://localhost:5000/api",
@@ -17,6 +18,7 @@ const api = ({dispatch}) => next => async action =>{
         }) 
     } catch (error) {
         dispatch({type:onError,payload:{error:error.message}})
+        dispatch({type:"SHOW_ERROR",payload:{error:error.message}})
     }
     
 }
