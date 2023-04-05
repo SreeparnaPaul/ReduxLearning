@@ -1,26 +1,26 @@
-import { addTask, removeTask,completedTask,fetchTodo } from "./store/tasksReduxToolkit";
-import { addEmployee } from "./store/employees";
+// import { getTasks } from "./store/tasksReduxToolkit";
 import store from "./store/configureStore";
+import axios from 'axios'
+import { fetchTasks } from "./store/tasksReduxToolkit";
 
+//1.simple function method
+// const gettingTasks = async() =>{
+//     try {
+//        //calling an api
+//     const response =await axios.get("http://localhost:5000/api/tasks");
+//     console.log(response);
+//     //dispatch action
+//     store.dispatch(getTasks({tasks: response.data})) ;
+//     } catch (error) {
+//         store.dispatch({
+//             type:"SHOW_ERROR",
+//             payload:{error:error.message},
+//         })
+//     }
+    
+// }
 
-// const unsubscribe=store.subscribe(()=>{
-//     console.log("Updated",store.getState());
-// })
+// gettingTasks();
 
+store.dispatch(fetchTasks());
 
-// store.dispatch(addTask({task:"Task 1"}))
-// store.dispatch(addTask({task:"Task 2"}))
-// console.log(store.getState());
-
-// store.dispatch(completedTask({id :2 }))
-
-// // unsubscribe();
-
-// store.dispatch(removeTask({id: 1}))
-// // store.dispatch(fetchTodo())
-// console.log(store.getState());
-
-store.dispatch(addEmployee({name:"Riya"}))
-
-// error middleware
-// store.dispatch({type:"SHOW_ERROR",payload:"User not found"})
