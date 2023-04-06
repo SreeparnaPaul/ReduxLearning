@@ -1,5 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../utils/http";
+import axios from "../../../frontend/src/utils/http";
 import { apiCallBegan } from "./api";
 const initialState={
     tasks:[],
