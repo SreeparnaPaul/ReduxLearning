@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../utils/http";
+import { apiCallBegan } from "./api";
 const initialState={
     tasks:[],
     loading:false,
@@ -31,11 +32,7 @@ const taskSlice = createSlice({
            state.loading = false
         },
         addTask :(state,action) => {
-            state.tasks.push({
-                id: ++id,
-                task: action.payload.task,
-                completed:false 
-            });
+            state.tasks.push(action.payload);
         },
         removeTask : (state,action)=>{
             const index = state.tasks.findIndex(task=>task.id === action.payload.id)
@@ -43,7 +40,7 @@ const taskSlice = createSlice({
         },
         completedTask : (state,action) => {
             const index = state.findIndex(task=>task.id === action.payload.id)
-            state.tasks[index].completed = true
+            state.tasks[index].completed = action.payload.completed
         }
     },
     // extraReducers:{
@@ -62,5 +59,32 @@ const taskSlice = createSlice({
     // },
 })
 
-export const { getTasks, addTask, removeTask, completedTask} = taskSlice.actions
+export const {apiRequested,apiRequestFailed, getTasks, addTask, removeTask, completedTask} = taskSlice.actions
 export default taskSlice.reducer;
+
+//Action creators
+const url = "/tasks"
+export const loadTasks = () =>apiCallBegan({
+    url:url,
+    onStart:apiRequested.type,
+    onSuccess:getTasks.type,
+    onError:apiRequestFailed.type
+})
+
+export const addNewTask = (task) => apiCallBegan({
+    url,
+    method:"POST",
+    data: task,
+    onSuccess:addTask.type,
+})
+export const updateCompleted = task => apiCallBegan({
+    url : `${url}/${task.id}`,
+    method: "PATCH",
+    data: task,
+    onSuccess: completedTask.type
+})
+export const deleteTask = task => apiCallBegan({
+    url : `${url}/${task.id}`,
+    method: "DELETE",
+    onSuccess: removeTask.type
+})

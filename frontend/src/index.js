@@ -1,4 +1,4 @@
-import { getTasks } from "./store/tasksReduxToolkit";
+import { getTasks, loadTasks,addNewTask, updateCompleted, deleteTask } from "./store/tasksReduxToolkit";
 import store from "./store/configureStore";
 import axios from 'axios'
 import { apiCallBegan } from "./store/api";
@@ -29,10 +29,9 @@ gettingTasks();
 
 
 
-store.dispatch(apiCallBegan({
-    url:"/tasks",
-    onStart:"tasks/apiRequested",
-    onSuccess:"tasks/getTasks",
-    onError:"tasks/apiRequestFailed"
-}))
+store.dispatch(loadTasks())
+store.dispatch(addNewTask({task :"Complete the excercise"}));
+store.dispatch(updateCompleted({id: 6, completed : true}))
+store.dispatch(deleteTask({id:6}))
+
 
